@@ -1,5 +1,7 @@
 package edu.kit.ipd.pp.prolog.vipr.view.textarea;
 
+import java.awt.Font;
+
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
@@ -25,16 +27,27 @@ public class CodeEditor extends JTextArea {
      * wurde.
      */
     private boolean textUpToDate;
+    
+    /**
+     * Schrift für den Normale Benutzung
+     */
+    private Font standardFont;
 
+    /**
+     * Schrift für den Beamer Modus
+     */
+    private Font beamerFont;
     /**
      * Konstruktor des Code-Editors.
      */
-    public CodeEditor() {
+    public CodeEditor(int beamerFontSize) {
         super();
         setName("codeEditor");
         setBounds(0, 0, 600, 500);
         yellowPainter = new DefaultHighlighter();
         yellowPainter.install(this);
+        standardFont = this.getFont();
+        beamerFont = new Font(standardFont.getFontName(), standardFont.getStyle(), standardFont.getSize() + beamerFontSize);
     }
 
     /**
@@ -86,6 +99,15 @@ public class CodeEditor extends JTextArea {
     @Override
     public Highlighter getHighlighter() {
         return this.yellowPainter;
+    }
+    
+    public void switchMode(boolean beamerMode) {
+        if(beamerMode) {
+        this.setFont(beamerFont);
+        }
+        else {
+            this.setFont(standardFont);
+        }
     }
 
 }

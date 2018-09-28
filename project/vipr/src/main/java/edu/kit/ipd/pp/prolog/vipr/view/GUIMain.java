@@ -65,6 +65,11 @@ public class GUIMain extends JFrame {
      * Scroll-Balken für das Ausgabefeld.
      */
     private JScrollPane spInOut;
+    
+    /**
+     * Gibt an in Pixeln wie viel größer die Schrift im Beamer Modus als im normalen Modus
+     */
+    private static int BEAMER_FONT_PLUS = 7;
 
     /**
      * Konstruktor der GUIMain. Erstellt die GUI, initialisiert die Attribute der
@@ -84,7 +89,7 @@ public class GUIMain extends JFrame {
         this.toolBar = new ToolBar();
         setJMenuBar(this.toolBar);
 
-        this.codeEditor = new CodeEditor();
+        this.codeEditor = new CodeEditor(BEAMER_FONT_PLUS);
         add(this.codeEditor);
         this.spEditor = new JScrollPane(this.codeEditor);
         addScrollPane(this.spEditor, this.codeEditor);
@@ -97,10 +102,10 @@ public class GUIMain extends JFrame {
         this.query.setBounds(r);
         this.query.setText(" ?- ");
         add(this.query);
-        this.queryField = new QueryField();
+        this.queryField = new QueryField(BEAMER_FONT_PLUS);
         add(this.queryField);
 
-        this.inOut = new InOut();
+        this.inOut = new InOut(BEAMER_FONT_PLUS);
         add(this.inOut);
         this.spInOut = new JScrollPane(this.inOut);
         addScrollPane(this.spInOut, this.inOut);
@@ -211,6 +216,16 @@ public class GUIMain extends JFrame {
                 .addGroup(groupLayout.createSequentialGroup().addComponent(this.graphicPane.getGraphComponent(),
                         GroupLayout.DEFAULT_SIZE, this.graphicPane.getGraphComponent().getHeight(), Short.MAX_VALUE)
                         .addGap(1)));
+    }
+    
+    /**
+     * Wechselt den Modus
+     * @param beamerMode wenn wahr wird zum Beamer Modus gewechselt (größere Schrift) sonst zum normalen Modus
+     */
+    public void switchMode(boolean beamerMode) {
+        codeEditor.switchMode(beamerMode);
+        inOut.switchMode(beamerMode);
+        queryField.switchMode(beamerMode);
     }
 
 }

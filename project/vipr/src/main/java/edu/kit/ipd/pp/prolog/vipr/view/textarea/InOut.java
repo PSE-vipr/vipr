@@ -1,6 +1,7 @@
 package edu.kit.ipd.pp.prolog.vipr.view.textarea;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -17,13 +18,25 @@ import javax.swing.text.StyledDocument;
 public class InOut extends JTextPane {
 
     /**
+     * Schrift für den Normale Benutzung
+     */
+    private Font standardFont;
+
+    /**
+     * Schrift für den Beamer Modus
+     */
+    private Font beamerFont;    
+
+    /**
      * Konstruktor des Ausgabefeldes.
      */
-    public InOut() {
+    public InOut(int beamerFontSize) {
         super();
         setName("inOut");
         setBounds(0, 500, 600, 225);
         setEditable(false);
+        standardFont = this.getFont();
+        beamerFont = new Font(standardFont.getFontName(), standardFont.getStyle(), standardFont.getSize() + beamerFontSize);
     }
 
     /**
@@ -46,6 +59,15 @@ public class InOut extends JTextPane {
             return;
         }
         setCaretPosition(getDocument().getLength());
+    }
+    
+    public void switchMode(boolean beamerMode) {
+        if(beamerMode) {
+        this.setFont(beamerFont);
+        }
+        else {
+            this.setFont(standardFont);
+        }
     }
 
 }

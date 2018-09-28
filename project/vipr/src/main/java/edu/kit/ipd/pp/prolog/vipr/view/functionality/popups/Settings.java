@@ -1,12 +1,17 @@
 package edu.kit.ipd.pp.prolog.vipr.view.functionality.popups;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import edu.kit.ipd.pp.prolog.vipr.controller.PreferenceSettings;
 import edu.kit.ipd.pp.prolog.vipr.controller.menulistener.LanguageListener;
+import edu.kit.ipd.pp.prolog.vipr.controller.menulistener.MenuSettingsListener;
 import edu.kit.ipd.pp.prolog.vipr.view.GUIMain;
 import edu.kit.ipd.pp.prolog.vipr.view.Language;
 import edu.kit.ipd.pp.prolog.vipr.view.functionality.Languages;
@@ -18,7 +23,12 @@ import edu.kit.ipd.pp.prolog.vipr.view.functionality.ToolBar;
  */
 @SuppressWarnings("serial")
 public class Settings extends JDialog {
-
+    
+    /**
+     * BeamerMode Checkbox
+     * Wird benötigt um während der Laufzeit festzustellen, ob die Checkbox aktiviert ist
+     */
+    private JCheckBox beamerMode;
     /**
      * Konstruktor, der das Settings-Fenster öffnet.
      * 
@@ -29,9 +39,9 @@ public class Settings extends JDialog {
      * @param preferenceSettings
      *            die ausgewählte und gespeicherte Einstellungen.
      */
-    public Settings(ToolBar toolBar, GUIMain guiMain, PreferenceSettings preferenceSettings) {
+    public Settings(ToolBar toolBar, GUIMain guiMain, PreferenceSettings preferenceSettings, boolean beamerModeSelected,
+            MenuSettingsListener menuSetList) {
         super(guiMain, Language.getInstance().getString("Settings.title"), true);
-
         // Das Drop-Down-Menü mit den Sprachen
         Language language = Language.getInstance();
         JComboBox<Languages> jcChoose = new JComboBox<>(Languages.values());
@@ -44,9 +54,19 @@ public class Settings extends JDialog {
         Object[] options = new Object[] {};
         JOptionPane jop = new JOptionPane(language.getString("Language.select"), JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.OK_CANCEL_OPTION, null, options, null);
-
+        
         // Das Drop-Down-Menü und der OK-Knopf hinzufügen
+       
         jop.add(jcChoose);
+        JCheckBox beamerMode = new JCheckBox(language.getString("Beamer.mode"));
+        beamerMode.setSelected(beamerModeSelected);
+        this.beamerMode = beamerMode;
+        JPanel jp = new JPanel();
+        jp.setLayout(new BorderLayout());
+        jp.add(beamerMode, BorderLayout.LINE_START);
+        jop.add(jp);
+        
+        
         JButton ok = new JButton("OK");
         ok.setName("OK");
         jop.add(ok);
@@ -56,11 +76,17 @@ public class Settings extends JDialog {
         setLocationRelativeTo(guiMain);
         setResizable(false);
 
+        
         // Der Listener für den OK-Knopf
         LanguageListener languageListener = new LanguageListener(jcChoose, this, toolBar, guiMain.getQueryField(),
-                preferenceSettings);
+                preferenceSettings, guiMain, menuSetList);
         ok.addActionListener(languageListener);
 
         setVisible(true);
     }
+    
+    public boolean isBeamerModeSelected() {
+        return this.beamerMode.isSelected();
+    }
+
 }

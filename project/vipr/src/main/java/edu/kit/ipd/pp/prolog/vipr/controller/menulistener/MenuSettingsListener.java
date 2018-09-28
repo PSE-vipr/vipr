@@ -34,6 +34,11 @@ public class MenuSettingsListener implements ActionListener {
     private PreferenceSettings preferenceSettings;
 
     /**
+     * Gibt an ob die BeamerMode Checkbox aktiviert sein soll
+     * Standart: nicht aktiviert
+     */
+    private boolean beamerModeSelected = false;
+    /**
      * Initialisiert den Listener mit allen nötigen Parametern.
      * 
      * @param tb
@@ -60,8 +65,16 @@ public class MenuSettingsListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        new Settings(toolBar, guiMain, preferenceSettings);
+        new Settings(toolBar, guiMain, preferenceSettings, beamerModeSelected, this);
 
+    }
+    
+    /**
+     * Setter
+     * @param beamerModeSelected
+     */
+    public void setBeamerModeCheckBox(boolean beamerModeSelected) {
+        this.beamerModeSelected = beamerModeSelected;
     }
 
 }

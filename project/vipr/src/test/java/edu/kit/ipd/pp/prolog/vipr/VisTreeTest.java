@@ -153,7 +153,7 @@ public class VisTreeTest {
             i.nextStep();
             i.nextStep();
             i.nextStep();
-            i.nextStep(); // Anfrage er füllt
+            i.nextStep(); // Anfrage erfüllt
         } catch (CalculateException | NoRuleException e) {
             fail("Fehler bei der Ausführung");
         }
@@ -284,7 +284,7 @@ public class VisTreeTest {
         ARVisNode root = i.getRoot().createVisNode(false);
         ARVisNode child = root.getChildren().get(0);
         ARVisNode Rchild = child.getChildren().get(0);
-        assertTrue(Rchild.getChildren().get(1).createHtmlTable().contains("white")); // Unvisited COLOR
+        assertTrue(Rchild.getChildren().get(1).createHtmlTable().contains("white")); // UNVISITED COLOR
         assertTrue(child.createHtmlTable().contains("white")); // PENDING COLOR
         try {
             i.nextStep();
@@ -296,7 +296,7 @@ public class VisTreeTest {
         root = i.getRoot().createVisNode(false);
         child = root.getChildren().get(0);
         Rchild = child.getChildren().get(0);
-        assertTrue(Rchild.getChildren().get(1).createHtmlTable().contains("white")); // FAILED show Pending color
+        assertTrue(Rchild.getChildren().get(1).createHtmlTable().contains("white")); // FAILED showPending COLOR
 
         try {
             i.nextStep();
@@ -307,7 +307,6 @@ public class VisTreeTest {
         } catch (CalculateException | NoRuleException e) {
             fail("Fehler bei der Ausführung");
         }
-        // FAILED ohne show Pending
     }
 
 }

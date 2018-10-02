@@ -30,7 +30,7 @@ public class GUIMain extends JFrame {
      * Gibt an um wie viel Pixel die große Schrift größer ist als die normale
      * Schrift.
      */
-    private static final int LARGER_FONT_PLUS = 8;
+    private static final int LARGER_FONT_PLUS = 7;
 
     /**
      * Speichert die Toolbar der GUI.

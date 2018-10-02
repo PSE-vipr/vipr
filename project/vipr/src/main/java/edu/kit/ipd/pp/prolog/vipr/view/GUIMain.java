@@ -103,7 +103,7 @@ public class GUIMain extends JFrame {
         this.query.setBounds(r);
         this.query.setText(" ?- ");
         add(this.query);
-        this.queryField = new QueryField(LARGER_FONT_PLUS);
+        this.queryField = new QueryField();
         add(this.queryField);
 
         this.inOut = new InOut(LARGER_FONT_PLUS);

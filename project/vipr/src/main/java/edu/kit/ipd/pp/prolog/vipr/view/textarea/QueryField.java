@@ -17,11 +17,8 @@ public class QueryField extends JTextField {
 
     /**
      * Konstruktor des Eingabefeldes.
-     * 
-     * @param largeFontSize
-     *            Beschreibt die Größe der großen Schrift.
      */
-    public QueryField(int largeFontSize) {
+    public QueryField() {
         super();
         setName("query");
         setForeground(Color.GRAY);

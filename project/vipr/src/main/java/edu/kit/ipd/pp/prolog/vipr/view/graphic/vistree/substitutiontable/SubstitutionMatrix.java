@@ -15,7 +15,7 @@ public class SubstitutionMatrix {
     /**
      * Hintergrundfarbe von Tabelleneinträgen, die eine Substitution darstellen.
      */
-    private static final String SUB_COLOR = "#FFFF46"; //Gelbton
+    private static final String SUB_COLOR = "#FFFF46"; // Gelbton
     /**
      * Hintergrundfarbe von leeren Tabelleneinträgen
      */

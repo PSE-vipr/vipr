@@ -18,25 +18,29 @@ import javax.swing.text.StyledDocument;
 public class InOut extends JTextPane {
 
     /**
-     * Schrift für den Normale Benutzung
+     * Normale Schrift.
      */
     private Font standardFont;
 
     /**
-     * Schrift für den Beamer Modus
+     * Große Schrift.
      */
-    private Font beamerFont;    
+    private Font largeFont;
 
     /**
      * Konstruktor des Ausgabefeldes.
+     * 
+     * @param largeFontSize
+     *            Beschreibt die Größe der großen Schrift.
      */
-    public InOut(int beamerFontSize) {
+    public InOut(int largeFontSize) {
         super();
         setName("inOut");
         setBounds(0, 500, 600, 225);
         setEditable(false);
         standardFont = this.getFont();
-        beamerFont = new Font(standardFont.getFontName(), standardFont.getStyle(), standardFont.getSize() + beamerFontSize);
+        largeFont = new Font(standardFont.getFontName(), standardFont.getStyle(),
+                standardFont.getSize() + largeFontSize);
     }
 
     /**
@@ -60,12 +64,14 @@ public class InOut extends JTextPane {
         }
         setCaretPosition(getDocument().getLength());
     }
-    
-    public void switchMode(boolean beamerMode) {
-        if(beamerMode) {
-        this.setFont(beamerFont);
-        }
-        else {
+
+    /**
+     * Wechselt die Schriftgröße.
+     */
+    public void changeFont() {
+        if (standardFont.equals(this.getFont())) {
+            this.setFont(largeFont);
+        } else {
             this.setFont(standardFont);
         }
     }

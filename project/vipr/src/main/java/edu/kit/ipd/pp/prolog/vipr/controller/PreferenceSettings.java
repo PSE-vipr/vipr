@@ -17,6 +17,11 @@ public class PreferenceSettings {
     private static final String BUNDLE_NAME = "language";
 
     /**
+     * Die Einstellung für die Schriftgröße.
+     */
+    private static final String LARGE_FONT = "useLargerFont";
+
+    /**
      * Die Einstellung zum Anzeigen des Hilfe-Fensters.
      */
     private static final String SHOW_HELP = "showHelpDialog";
@@ -25,6 +30,11 @@ public class PreferenceSettings {
      * Speichert die Einstellungen.
      */
     private Preferences prefs;
+
+    /**
+     * true, wenn die große Schrift benutzt werden soll, false sonst
+     */
+    private boolean largeFont;
 
     /**
      * true, wenn das Hilfe-Fenster angezeigt werden muss, false sonst
@@ -36,6 +46,7 @@ public class PreferenceSettings {
      */
     public PreferenceSettings() {
         prefs = Preferences.userRoot().node(this.getClass().getName());
+        largeFont = prefs.getBoolean(LARGE_FONT, false);
         showHelp = prefs.getBoolean(SHOW_HELP, true);
         if (showHelp) {
             prefs.putBoolean(SHOW_HELP, false);
@@ -58,6 +69,28 @@ public class PreferenceSettings {
      */
     public void changeLanguage(String language) {
         prefs.put(BUNDLE_NAME, language);
+    }
+
+    /**
+     * Ändert die Schrifteinstellung.
+     */
+    public void changeFont() {
+        if (largeFont) {
+            prefs.putBoolean(LARGE_FONT, false);
+            largeFont = false;
+        } else {
+            prefs.putBoolean(LARGE_FONT, true);
+            largeFont = true;
+        }
+    }
+
+    /**
+     * Gibt zurück, ob die große Schrift benutzt werden soll.
+     * 
+     * @return true, wenn die große Schrift benutzt werden soll, false sonst
+     */
+    public boolean getLargeFont() {
+        return largeFont;
     }
 
     /**

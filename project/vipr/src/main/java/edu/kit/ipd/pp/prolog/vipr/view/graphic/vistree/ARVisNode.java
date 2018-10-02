@@ -17,15 +17,15 @@ public abstract class ARVisNode {
     private static final String ROUNDED_CORNER_STYLE = "rounded=false;";
     private static final String NO_ARROW_HEAD_STYLE = "endArrow=none;";
     private static final String FULLFILLED_VERTEX_COLOR = "fillColor=#72E38F;"; // Grünton
-    private static final String FAILED_VERTEX_COLOR = "fillColor=#FF4646;"; //Rotton
+    private static final String FAILED_VERTEX_COLOR = "fillColor=#FF4646;"; // Rotton
     private static final String CUTFAILED_VERTEX_COLOR = "fillColor=red;";
     private static final String PENDING_VERTEX_COLOR = "fillColor=white;";
     private static final String UNVISITED_VERTEX_COLOR = "fillColor=white;";
     /**
      * Style-Parameter für die Tabelle innerhalb des Knotens.
      */
-    private static final String FULLFILLED_COLOR = "#72E38F"; //Grünton
-    private static final String FAILED_COLOR = "#FF4646"; //Rotton
+    private static final String FULLFILLED_COLOR = "#72E38F"; // Grünton
+    private static final String FAILED_COLOR = "#FF4646"; // Rotton
     private static final String PENDING_COLOR = "white";
     private static final String UNVISITED_COLOR = "white";
 

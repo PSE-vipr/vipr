@@ -11,11 +11,9 @@ import javax.swing.JPanel;
 
 import edu.kit.ipd.pp.prolog.vipr.controller.PreferenceSettings;
 import edu.kit.ipd.pp.prolog.vipr.controller.menulistener.LanguageListener;
-import edu.kit.ipd.pp.prolog.vipr.controller.menulistener.MenuSettingsListener;
 import edu.kit.ipd.pp.prolog.vipr.view.GUIMain;
 import edu.kit.ipd.pp.prolog.vipr.view.Language;
 import edu.kit.ipd.pp.prolog.vipr.view.functionality.Languages;
-import edu.kit.ipd.pp.prolog.vipr.view.functionality.ToolBar;
 
 /**
  * In dieser Klasse können in einem neuem Fenster Einstellungen vorgenommen
@@ -23,28 +21,28 @@ import edu.kit.ipd.pp.prolog.vipr.view.functionality.ToolBar;
  */
 @SuppressWarnings("serial")
 public class Settings extends JDialog {
-    
+
     /**
-     * BeamerMode Checkbox
-     * Wird benötigt um während der Laufzeit festzustellen, ob die Checkbox aktiviert ist
+     * Die Check-Box zum Einstellen der Schriftgröße.
      */
-    private JCheckBox beamerMode;
+    private JCheckBox fontCheckBox;
+
     /**
-     * Konstruktor, der das Settings-Fenster öffnet.
+     * Konstruktor, der das Einstellungen-Fenster öffnet.
      * 
-     * @param toolBar
-     *            der Toolbar der Benutzeroberfläche.
      * @param guiMain
-     *            die grafische Benutzeroberfläche.
+     *            Die grafische Benutzeroberfläche.
      * @param preferenceSettings
-     *            die ausgewählte und gespeicherte Einstellungen.
+     *            Die ausgewählten und gespeicherten Einstellungen.
      */
-    public Settings(ToolBar toolBar, GUIMain guiMain, PreferenceSettings preferenceSettings, boolean beamerModeSelected,
-            MenuSettingsListener menuSetList) {
+    public Settings(GUIMain guiMain, PreferenceSettings preferenceSettings) {
+
         super(guiMain, Language.getInstance().getString("Settings.title"), true);
+
         // Das Drop-Down-Menü mit den Sprachen
         Language language = Language.getInstance();
         JComboBox<Languages> jcChoose = new JComboBox<>(Languages.values());
+
         // Die Aktuelle Sprache als erstes anzeigen
         jcChoose.setSelectedItem(language.getCurrentLanguage());
 
@@ -54,19 +52,16 @@ public class Settings extends JDialog {
         Object[] options = new Object[] {};
         JOptionPane jop = new JOptionPane(language.getString("Language.select"), JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.OK_CANCEL_OPTION, null, options, null);
-        
-        // Das Drop-Down-Menü und der OK-Knopf hinzufügen
-       
+
+        // Das Drop-Down-Menü, die Schriftgrößen-Check-Box und den OK-Knopf hinzufügen
         jop.add(jcChoose);
-        JCheckBox beamerMode = new JCheckBox(language.getString("Beamer.mode"));
-        beamerMode.setSelected(beamerModeSelected);
-        this.beamerMode = beamerMode;
+        fontCheckBox = new JCheckBox(language.getString("Text.larger"));
+        fontCheckBox.setSelected(preferenceSettings.getLargeFont());
         JPanel jp = new JPanel();
         jp.setLayout(new BorderLayout());
-        jp.add(beamerMode, BorderLayout.LINE_START);
+        jp.add(fontCheckBox, BorderLayout.LINE_START);
         jop.add(jp);
-        
-        
+
         JButton ok = new JButton("OK");
         ok.setName("OK");
         jop.add(ok);
@@ -76,17 +71,20 @@ public class Settings extends JDialog {
         setLocationRelativeTo(guiMain);
         setResizable(false);
 
-        
         // Der Listener für den OK-Knopf
-        LanguageListener languageListener = new LanguageListener(jcChoose, this, toolBar, guiMain.getQueryField(),
-                preferenceSettings, guiMain, menuSetList);
+        LanguageListener languageListener = new LanguageListener(jcChoose, this, preferenceSettings, guiMain);
         ok.addActionListener(languageListener);
 
         setVisible(true);
     }
-    
-    public boolean isBeamerModeSelected() {
-        return this.beamerMode.isSelected();
+
+    /**
+     * Gibt zurück, ob die große Schrift ausgewählt ist.
+     * 
+     * @return true, wenn die große Schrift ausgewählt ist, false sonst
+     */
+    public boolean isLargeFontSelected() {
+        return fontCheckBox.isSelected();
     }
 
 }

@@ -4,26 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 
 import edu.kit.ipd.pp.prolog.vipr.controller.PreferenceSettings;
 import edu.kit.ipd.pp.prolog.vipr.view.GUIMain;
 import edu.kit.ipd.pp.prolog.vipr.view.Language;
 import edu.kit.ipd.pp.prolog.vipr.view.functionality.Languages;
-import edu.kit.ipd.pp.prolog.vipr.view.functionality.ToolBar;
 import edu.kit.ipd.pp.prolog.vipr.view.functionality.popups.Settings;
-import edu.kit.ipd.pp.prolog.vipr.view.textarea.QueryField;
 
 /**
- * Dieser Listener ermöglicht das Auswählen einer Sprache. Nachdem eine Sprache
- * ausgewählt und bestätigt wurde, startet die Methode actionPerformed.
- * Daraufhin wird die Spracheinstellung angepasst und die Labels der grafischen
- * Benutzeroberfläche werden aktualisiert.
+ * Dieser Listener ermöglicht das Auswählen einer Sprache und einer
+ * Schriftgröße.
  */
 public class LanguageListener implements ActionListener {
-    
+
     /**
-     * Die GUI. Wird zum ändern der Schrift für Beamermode benutzt
+     * Die grafische Benutzeroberfläche.
      */
     private GUIMain guiMain;
 
@@ -33,71 +28,42 @@ public class LanguageListener implements ActionListener {
     private JComboBox<Languages> jComboBox;
 
     /**
-     * Der Dialog auf dem sich das Drop-Down-Menü und der Bestätigungsknopf
-     * befinden.
+     * Die Einstellungen.
      */
-    private Settings setting;
+    private Settings settings;
 
     /**
-     * Die Toolbar der grafischen Benutzeroberfläche. Wird zum Aktualisieren der
-     * Labels verwendet.
-     */
-    private ToolBar toolBar;
-
-    /**
-     * Das Eingabefeld der grafischen Benutzeroberfläche. Wird zum Aktualisieren der
-     * Sprache verwendet.
-     */
-    private QueryField queryField;
-
-    /**
-     * Die gespeicherten Einstellungen. Werden für die Spracheinstellung verwendet.
+     * Die gespeicherten Einstellungen.
      */
     private PreferenceSettings preferenceSettings;
 
-    /**
-     *Der Settinglistener, der die Setting-pop ups erzeugt, wird benötigt damit bei erzeugten Setting-pop-ups gegenfalls
-     *die Beamermoduscheckbox aktiviert ist (bzw. nicht aktiviert ist) 
-     */
-    private MenuSettingsListener menuSetList;
     /**
      * Initialisiert den Listener mit allen nötigen Parametern.
      * 
      * @param jComboBox
      *            Das Drop-Down-Menü, das die verschiedenen Sprachen zur Auswahl
      *            beinhaltet.
-     * @param diag
-     *            Der Dialog auf dem sich das Drop-Down-Menü und der
-     *            Bestätigungsknopf befinden.
-     * @param tb
-     *            Die Toolbar der grafischen Benutzeroberfläche. Wird zum
-     *            Aktualisieren der Labels verwendet.
-     * @param qf
-     *            Das Einabefeld der grafischen Benutzeroberfläche. Wird zum
-     *            Aktualisieren der Sprache verwendet.
+     * @param settings
+     *            Die Einstellungen.
      * @param prefs
-     *            Die gespeicherten Einstellungen. Werden für die Spracheinstellung
-     *            verwendet.
+     *            Die gespeicherten Einstellungen.
+     * @param guiMain
+     *            Die GUI.
      */
-    public LanguageListener(JComboBox<Languages> jComboBox, Settings setting, ToolBar tb, QueryField qf,
-            PreferenceSettings prefs, GUIMain guiMain, MenuSettingsListener menuSetList) {
+    public LanguageListener(JComboBox<Languages> jComboBox, Settings settings, PreferenceSettings prefs,
+            GUIMain guiMain) {
         this.guiMain = guiMain;
         this.jComboBox = jComboBox;
-        this.setting = setting;
-        this.toolBar = tb;
-        this.queryField = qf;
+        this.settings = settings;
         this.preferenceSettings = prefs;
-        this.menuSetList = menuSetList;
     }
 
-
     /**
-     * Setzt die Spracheinstellung auf die ausgewählte Sprache und aktualisiert alle
-     * Labels.
+     * Setzt die Sprach- und die Schrifteinstellungen und aktualisiert alle Labels.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Sprache
+        // Sprache
         Language language = Language.getInstance();
 
         // Testet welche Sprache wurde ausgewählt wurde
@@ -116,18 +82,18 @@ public class LanguageListener implements ActionListener {
         }
 
         // Aktualisiert die Labels
-        toolBar.updateLabels();
-        queryField.updateLabels();
-        
-        //BeamerMode
-        guiMain.switchMode(this.setting.isBeamerModeSelected());
-        //Merkt sich die evtl Umstellung der Chackbox
-        menuSetList.setBeamerModeCheckBox(this.setting.isBeamerModeSelected());
+        guiMain.getToolBar().updateLabels();
+        guiMain.getQueryField().updateLabels();
+
+        // Aktualisiert die Schrifteinstellung
+        if (settings.isLargeFontSelected() != preferenceSettings.getLargeFont()) {
+            preferenceSettings.changeFont();
+            guiMain.changeFont();
+        }
 
         // Schließt das Dialogfenster
-        setting.dispose();
-        
-        
+        settings.dispose();
+
     }
 
 }

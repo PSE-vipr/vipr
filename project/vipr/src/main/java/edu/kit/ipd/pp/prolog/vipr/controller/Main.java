@@ -101,7 +101,7 @@ public class Main {
             MenuAboutListener menuAboutListener = new MenuAboutListener(guiMain);
             tb.getMenu().getAbout().addActionListener(menuAboutListener);
 
-            MenuSettingsListener menuSettingsListener = new MenuSettingsListener(tb, guiMain, prefs);
+            MenuSettingsListener menuSettingsListener = new MenuSettingsListener(guiMain, prefs);
             tb.getMenu().getSettings().addActionListener(menuSettingsListener);
 
             MenuHelpListener menuHelpListener = new MenuHelpListener(guiMain);
@@ -148,6 +148,11 @@ public class Main {
 
             // aktiviere / deaktiviere Knöpfe
             tb.buttonsAfterLoad();
+
+            if (prefs.getLargeFont()) {
+                guiMain.changeFont();
+                ce.setCaretPosition(0);
+            }
 
             if (prefs.getShowHelp()) {
                 JScrollPane sp = new JScrollPane(new HelpPopUp());

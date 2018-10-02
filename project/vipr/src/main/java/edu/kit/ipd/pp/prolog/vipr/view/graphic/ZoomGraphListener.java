@@ -42,7 +42,7 @@ public class ZoomGraphListener implements MouseWheelListener {
      * Vergrößert die Grafik um eine Stufe.
      */
     private void zoomIn() {
-        if (this.graphComponent.getGraph().getView().getScale() < 2.5) {
+        if (this.graphComponent.getGraph().getView().getScale() < 2.0) {
             if (this.graphComponent.getGraph().getView().getScale() > 0.2) {
                 this.graphComponent.zoom(1.1);
             } else {

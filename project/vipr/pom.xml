@@ -99,6 +99,8 @@
 							<mainClass>edu.kit.ipd.pp.prolog.vipr.controller.Main</mainClass>
 						</manifest>
 					</archive>
+					<finalName>vipr</finalName>
+        				<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 				<executions>
 					<execution>

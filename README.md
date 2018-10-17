@@ -7,4 +7,4 @@ Installationsanleitung für Maven: https://www.baeldung.com/install-maven-on-win
 
 Es ist auch möglich die jar über eine IDE zu erzeugen (z.B. Eclipse). Dafür bitte den projekt-Ordner als Mavenprojekt importieren und über die IDE "mvn package" ausführen.
 
-In beiden Fällen befindet sich die jar in project/vipr/target/vipr-0.0.1-SNAPSHOT-jar-with-dependencies.jar.
+In beiden Fällen befindet sich die jar in project/vipr/target/vipr.jar.
